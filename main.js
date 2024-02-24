@@ -121,8 +121,8 @@ function momir(manaValue) {
     });
 }
 
-document.querySelectorAll("input[name='mode']").forEach((radio) => {
-  radio.addEventListener("input", (event) => {
+document.querySelectorAll("input[name='mode']").forEach(radio => {
+  radio.addEventListener("input", event => {
     localStorage.setItem("momir-printMode", event.target.value);
   });
 });
@@ -133,7 +133,7 @@ document.addEventListener("fullscreenchange", () => {
   }
 });
 
-document.getElementById("fullscreen-button").addEventListener("click", (event) => {
+document.getElementById("fullscreen-button").addEventListener("click", event => {
   document.getElementById("settings").classList.add("d-none");
 
   const elem = document.documentElement;
@@ -151,7 +151,7 @@ document.getElementById("fullscreen-button").addEventListener("click", (event) =
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("momir-buttons");
 
-  [...Array(14).keys(), 15, 16].forEach((x) => {
+  [...Array(14).keys(), 15, 16].forEach(x => {
     const button = document.createElement("button");
     button.textContent = x;
     button.classList.add("momir-button", "btn", "btn-primary");
