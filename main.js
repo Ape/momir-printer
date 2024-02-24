@@ -71,11 +71,13 @@ function momir(manaValue) {
   loadingAlert.classList.remove("d-none");
   loadingAlert.classList.add("show");
 
+  const buttons = document.querySelectorAll(".momir-button");
+  buttons.forEach(button => {
+    button.disabled = true;
+  });
+
   fetchImage(url)
     .then(image => {
-      loadingAlert.classList.remove("show");
-      loadingAlert.classList.add("d-none");
-
       const mode = getPrintMode();
       switch (mode) {
       case "show":
@@ -93,13 +95,19 @@ function momir(manaValue) {
       }
     })
     .catch(error => {
-      loadingAlert.classList.remove("show");
-      loadingAlert.classList.add("d-none");
       console.error(error);
       const errorAlert = document.getElementById("errorAlert")
       errorAlert.textContent = error;
       errorAlert.classList.remove("d-none");
       errorAlert.classList.add("show");
+    })
+    .finally(() => {
+      loadingAlert.classList.remove("show");
+      loadingAlert.classList.add("d-none");
+
+      buttons.forEach(button => {
+        button.disabled = false;
+      });
     });
 }
 

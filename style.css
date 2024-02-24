@@ -17,6 +17,9 @@ h1 {
   --bs-btn-hover-border-color: #666;
   --bs-btn-active-bg: #555;
   --bs-btn-active-border-color: #999;
+  --bs-btn-disabled-color: #888;
+  --bs-btn-disabled-bg: #555;
+  --bs-btn-disabled-border-color: #777;
 }
 
 .btn {
