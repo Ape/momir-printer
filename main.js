@@ -49,6 +49,16 @@ function makeQuery(params, separator) {
     .join(separator);
 }
 
+function showAlert(element) {
+  element.classList.remove("d-none");
+  element.classList.add("show");
+}
+
+function hideAlert(element) {
+  element.classList.add("d-none");
+  element.classList.remove("show");
+}
+
 function momir(manaValue) {
   const query = makeQuery({
     q: [
@@ -67,13 +77,12 @@ function momir(manaValue) {
   const url = `https://api.scryfall.com/cards/random?${query}`
 
   document.getElementById("card-image").classList.add("d-none");
-  const loadingAlert = document.getElementById("loadingAlert");
-  loadingAlert.classList.remove("d-none");
-  loadingAlert.classList.add("show");
 
+  const loadingAlert = document.getElementById("loadingAlert");
   const errorAlert = document.getElementById("errorAlert")
-  errorAlert.classList.add("d-none");
-  errorAlert.classList.remove("show");
+
+  showAlert(loadingAlert);
+  hideAlert(errorAlert);
 
   const buttons = document.querySelectorAll(".momir-button");
   buttons.forEach(button => {
@@ -101,12 +110,10 @@ function momir(manaValue) {
     .catch(error => {
       console.error(error);
       errorAlert.textContent = error.message;
-      errorAlert.classList.remove("d-none");
-      errorAlert.classList.add("show");
+      showAlert(errorAlert);
     })
     .finally(() => {
-      loadingAlert.classList.remove("show");
-      loadingAlert.classList.add("d-none");
+      hideAlert(loadingAlert);
 
       buttons.forEach(button => {
         button.disabled = false;
