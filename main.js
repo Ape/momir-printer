@@ -40,6 +40,7 @@ function showImage(url) {
   card.classList.remove("d-none");
 
   document.getElementById("content").classList.add("d-print-none");
+  document.getElementById("settings").classList.add("d-print-none");
 }
 
 function makeQuery(params, separator) {
