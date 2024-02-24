@@ -1,11 +1,13 @@
 body {
   background-color: black;
   color: #ddd;
-  padding-top: 20px;
+  padding-top: 5px;
+  font-family: "text", serif;
 }
 
 h1 {
-  text-align: center;
+  font-family: "title", serif;
+  margin-bottom: -5px;
 }
 
 .btn-primary {
@@ -17,6 +19,19 @@ h1 {
   --bs-btn-active-border-color: #999;
 }
 
+.btn {
+  font-size: 1.15rem;
+  padding: 5px 15px 2px 15px;
+  margin: 5px;
+  padding-bottom: 2px;
+}
+
+.alert {
+  width: 80%;
+  padding: 4px;
+  display: inline-block;
+}
+
 .alert-primary {
   background-color: #333;
   border-color: #555;
@@ -24,7 +39,8 @@ h1 {
 }
 
 .main-container {
-  max-width: 500px;
+  max-width: 400px;
+  text-align: center;
   padding: 0;
 }
 
@@ -35,12 +51,26 @@ h1 {
 
 .momir-button {
   flex: 0 0 calc(25% - 10px);
-  padding: 5px;
-  margin: 5px;
 }
 
 #card-image {
   width: 100%;
+}
+
+@font-face {
+  font-family: "title";
+  src: url("fonts/beleren-b.woff2") format("woff2"),
+       url("fonts/beleren-b.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "text";
+  src: url("fonts/mplantin.woff2") format("woff2"),
+       url("fonts/mplantin.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @media print {
