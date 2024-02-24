@@ -1,0 +1,54 @@
+body {
+  background-color: black;
+  color: #ddd;
+  padding-top: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.btn-primary {
+  --bs-btn-bg: #333;
+  --bs-btn-border-color: #444;
+  --bs-btn-hover-bg: #333;
+  --bs-btn-hover-border-color: #666;
+  --bs-btn-active-bg: #555;
+  --bs-btn-active-border-color: #999;
+}
+
+.alert-primary {
+  background-color: #333;
+  border-color: #555;
+  color: #ddd;
+}
+
+.main-container {
+  max-width: 500px;
+  padding: 0;
+}
+
+#momir-buttons {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.momir-button {
+  flex: 0 0 calc(25% - 10px);
+  padding: 5px;
+  margin: 5px;
+}
+
+#card-image {
+  width: 100%;
+}
+
+@media print {
+  body {
+    background-color: white;
+  }
+
+  #card-image {
+    width: 2.4in;
+  }
+}
