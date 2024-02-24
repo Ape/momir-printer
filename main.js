@@ -35,9 +35,11 @@ function getPrintMode() {
 }
 
 function showImage(url) {
-  document.getElementById("card-image").src = url;
+  const card = document.getElementById("card-image");
+  card.src = url;
+  card.classList.remove("d-none");
+
   document.getElementById("content").classList.add("d-print-none");
-  document.getElementById("card").classList.remove("d-none");
 }
 
 function makeQuery(params, separator) {
@@ -63,7 +65,7 @@ function momir(manaValue) {
 
   const url = `https://api.scryfall.com/cards/random?${query}`
 
-  document.getElementById("card").classList.add("d-none");
+  document.getElementById("card-image").classList.add("d-none");
   const loadingAlert = document.getElementById("loadingAlert");
   loadingAlert.classList.remove("d-none");
   loadingAlert.classList.add("show");
@@ -125,10 +127,6 @@ document.getElementById("fullscreen-button").addEventListener("click", (event) =
   } else if (elem.msRequestFullscreen) {
     elem.msRequestFullscreen();
   }
-});
-
-document.getElementById("print-button").addEventListener("click", (event) => {
-  window.print();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
