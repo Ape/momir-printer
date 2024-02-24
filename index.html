@@ -13,20 +13,23 @@
     <div id="content">
       <h1>Momir Printer</h1>
       <div id="momir-buttons" class="container"></div>
-      <div id="mode-selection" class="container text-center">
-        <strong class="me-2">Mode:</strong>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="mode" id="showMode" value="show" checked>
-          <label class="form-check-label" for="showMode">Show</label>
+      <div id="settings">
+        <div id="mode-selection" class="container text-center">
+          <strong class="me-2">Mode:</strong>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="mode" id="showMode" value="show" checked>
+            <label class="form-check-label" for="showMode">Show</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="mode" id="printMode" value="print">
+            <label class="form-check-label" for="printMode">Print</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="mode" id="rawbtMode" value="rawbt">
+            <label class="form-check-label" for="rawbtMode">RawBT</label>
+          </div>
         </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="mode" id="printMode" value="print">
-          <label class="form-check-label" for="printMode">Print</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="mode" id="rawbtMode" value="rawbt">
-          <label class="form-check-label" for="rawbtMode">RawBT</label>
-        </div>
+        <button id="fullscreen-button" class="btn btn-primary">Fullscreen</button>
       </div>
       <div id="loadingAlert" class="alert alert-primary fade d-none" role="alert">Please wait...</div>
       <div id="errorAlert" class="alert alert-danger alert-dismissible fade d-none" role="alert"></div>

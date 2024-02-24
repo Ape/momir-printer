@@ -106,6 +106,27 @@ document.querySelectorAll("input[name='mode']").forEach((radio) => {
   });
 });
 
+document.addEventListener("fullscreenchange", () => {
+  if (!document.fullscreenElement) {
+    document.getElementById("settings").classList.remove("d-none");
+  }
+});
+
+document.getElementById("fullscreen-button").addEventListener("click", (event) => {
+  document.getElementById("settings").classList.add("d-none");
+
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) {
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) {
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    elem.msRequestFullscreen();
+  }
+});
+
 document.getElementById("print-button").addEventListener("click", (event) => {
   window.print();
 });
