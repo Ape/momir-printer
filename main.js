@@ -74,12 +74,12 @@ function momir(manaValue) {
     version: "border_crop",
   }, "&");
 
-  const url = `https://api.scryfall.com/cards/random?${query}`
+  const url = `https://api.scryfall.com/cards/random?${query}`;
 
   document.getElementById("card-image").classList.add("d-none");
 
   const loadingAlert = document.getElementById("loadingAlert");
-  const errorAlert = document.getElementById("errorAlert")
+  const errorAlert = document.getElementById("errorAlert");
 
   showAlert(loadingAlert);
   hideAlert(errorAlert);
