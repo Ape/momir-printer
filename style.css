@@ -32,6 +32,7 @@ h1 {
 .alert {
   width: 80%;
   padding: 4px;
+  margin-bottom: 2px;
   display: inline-block;
 }
 

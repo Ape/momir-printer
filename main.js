@@ -2,7 +2,7 @@ async function fetchImage(url) {
   const response = await fetch(url);
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch image: ${response.status} ${await getScryfallError(response)}`);
+    throw new Error(`Failed to fetch image: ${await getScryfallError(response)}`);
   }
 
   const blob = await response.blob();
@@ -71,6 +71,10 @@ function momir(manaValue) {
   loadingAlert.classList.remove("d-none");
   loadingAlert.classList.add("show");
 
+  const errorAlert = document.getElementById("errorAlert")
+  errorAlert.classList.add("d-none");
+  errorAlert.classList.remove("show");
+
   const buttons = document.querySelectorAll(".momir-button");
   buttons.forEach(button => {
     button.disabled = true;
@@ -96,8 +100,7 @@ function momir(manaValue) {
     })
     .catch(error => {
       console.error(error);
-      const errorAlert = document.getElementById("errorAlert")
-      errorAlert.textContent = error;
+      errorAlert.textContent = error.message;
       errorAlert.classList.remove("d-none");
       errorAlert.classList.add("show");
     })
