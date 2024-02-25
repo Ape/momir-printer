@@ -187,7 +187,7 @@ document.addEventListener("fullscreenchange", () => {
   }
 });
 
-document.getElementById("fullscreen-button").addEventListener("click", event => {
+document.getElementById("zen-button").addEventListener("click", event => {
   document.getElementById("controls").classList.add("d-none");
 
   const elem = document.documentElement;
