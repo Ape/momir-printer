@@ -152,6 +152,12 @@ function momir(manaValue) {
     });
 }
 
+document.getElementById("card-image").addEventListener("click", event => {
+  if (getPrintMode() == "print") {
+    window.print();
+  }
+});
+
 document.querySelectorAll("input[name='mode']").forEach(radio => {
   radio.addEventListener("input", event => {
     localStorage.setItem("momir-printMode", event.target.value);
