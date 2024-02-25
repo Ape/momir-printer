@@ -29,6 +29,33 @@ async function getScryfallError(response) {
   return await response.text();
 }
 
+function addToHistory(image) {
+  const history = document.getElementById("history");
+  const element = document.createElement("img");
+  element.src = image;
+  element.alt = "previous card image";
+  element.classList.add("history-image");
+
+  element.addEventListener("click", () => {
+    history.removeChild(element);
+    addCurrentCardToHistory();
+    printImage(image);
+  });
+
+  history.appendChild(element);
+
+  while (history.children.length > 5) {
+    history.removeChild(history.children[0]);
+  }
+}
+
+function addCurrentCardToHistory() {
+  const card = document.getElementById("card-image");
+  if (!card.classList.contains("d-none")) {
+    addToHistory(card.src);
+  }
+}
+
 function getPrintMode() {
   const modeSelection = document.getElementById("mode-selection");
   return modeSelection.querySelector("input[name='mode']:checked").value;
@@ -40,7 +67,7 @@ function showImage(url) {
   card.classList.remove("d-none");
 
   document.getElementById("content").classList.add("d-print-none");
-  document.getElementById("settings").classList.add("d-print-none");
+  document.getElementById("controls").classList.add("d-print-none");
 }
 
 function makeQuery(params, separator) {
@@ -57,6 +84,25 @@ function showAlert(element) {
 function hideAlert(element) {
   element.classList.add("d-none");
   element.classList.remove("show");
+}
+
+function printImage(image) {
+  const mode = getPrintMode();
+  switch (mode) {
+  case "show":
+    showImage(image);
+    break;
+  case "print":
+    showImage(image);
+    window.print();
+    break;
+  case "rawbt":
+    window.open(`rawbt:${image}`);
+    addToHistory(image);
+    break;
+  default:
+    console.error(`Unknown print mode: ${mode}`);
+  }
 }
 
 function momir(manaValue) {
@@ -76,6 +122,7 @@ function momir(manaValue) {
 
   const url = `https://api.scryfall.com/cards/random?${query}`;
 
+  addCurrentCardToHistory();
   document.getElementById("card-image").classList.add("d-none");
 
   const loadingAlert = document.getElementById("loadingAlert");
@@ -90,23 +137,7 @@ function momir(manaValue) {
   });
 
   fetchImage(url)
-    .then(image => {
-      const mode = getPrintMode();
-      switch (mode) {
-      case "show":
-        showImage(image);
-        break;
-      case "print":
-        showImage(image);
-        window.print();
-        break;
-      case "rawbt":
-        window.open(`rawbt:${image}`);
-        break;
-      default:
-        console.error(`Unknown print mode: ${mode}`);
-      }
-    })
+    .then(image => printImage(image))
     .catch(error => {
       console.error(error);
       errorAlert.textContent = error.message;
@@ -124,17 +155,34 @@ function momir(manaValue) {
 document.querySelectorAll("input[name='mode']").forEach(radio => {
   radio.addEventListener("input", event => {
     localStorage.setItem("momir-printMode", event.target.value);
+
+    const card = document.getElementById("card-image")
+
+    if (event.target.value == "rawbt") {
+      addCurrentCardToHistory();
+      card.classList.add("d-none");
+    } else if (card.classList.contains("d-none")) {
+      const history = document.getElementById("history");
+
+      if (history.children.length > 0) {
+        card.classList.remove("d-none");
+
+        const previousCard = history.children[history.children.length - 1];
+        history.removeChild(previousCard);
+        card.src = previousCard.src;
+      }
+    }
   });
 });
 
 document.addEventListener("fullscreenchange", () => {
   if (!document.fullscreenElement) {
-    document.getElementById("settings").classList.remove("d-none");
+    document.getElementById("controls").classList.remove("d-none");
   }
 });
 
 document.getElementById("fullscreen-button").addEventListener("click", event => {
-  document.getElementById("settings").classList.add("d-none");
+  document.getElementById("controls").classList.add("d-none");
 
   const elem = document.documentElement;
   if (elem.requestFullscreen) {
