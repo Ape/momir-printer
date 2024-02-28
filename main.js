@@ -113,7 +113,7 @@ function momir(manaValue) {
       "type:/^[^\\/]*Creature/", // Creature on the front side
       "-type:land",
       "-mana>=x", // No {X} in the mana cost
-      "-name:Asmoranomardicadaistinaculdacar",
+      "-mana:/^$/", // No cards without a mana cost
       `cmc:${manaValue}`,
     ].join("+"),
     format: "image",
