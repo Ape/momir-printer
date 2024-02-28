@@ -171,11 +171,9 @@ document.querySelectorAll("input[name='mode']").forEach(radio => {
       const history = document.getElementById("history");
 
       if (history.children.length > 0) {
-        card.classList.remove("d-none");
-
         const previousCard = history.children[history.children.length - 1];
         history.removeChild(previousCard);
-        card.src = previousCard.src;
+        showImage(previousCard.src);
       }
     }
   });
