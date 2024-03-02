@@ -9,7 +9,7 @@ async function fetchImage(url) {
 
   return new Promise((resolve) => {
     const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result);
+    reader.addEventListener("load", () => resolve(reader.result));
     reader.readAsDataURL(blob);
   });
 }
@@ -77,9 +77,9 @@ function printRawbt(image){
 
   const socket = new WebSocket("ws://localhost:40213/");
 
-  socket.onerror = event => showError("Failed to connect to RawBT WS API");
+  socket.addEventListener("error", event => showError("Failed to connect to RawBT WS API"));
 
-  socket.onopen = event => {
+  socket.addEventListener("open", event => {
     const job = {commands: [{
       command: "image",
       base64: image.split(",")[1],
@@ -89,9 +89,9 @@ function printRawbt(image){
     }]};
 
     socket.send(JSON.stringify(job));
-  };
+  });
 
-  socket.onmessage = event => {
+  socket.addEventListener("message", event => {
     response = JSON.parse(event.data);
 
     switch (response.responseType) {
@@ -110,7 +110,7 @@ function printRawbt(image){
       showError(`Unknown RawBT response: ${event.data}`);
       socket.close();
     }
-  };
+  });
 }
 
 function makeQuery(params, separator) {
