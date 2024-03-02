@@ -68,6 +68,49 @@ function showImage(url) {
 
   document.getElementById("content").classList.add("d-print-none");
   document.getElementById("controls").classList.add("d-print-none");
+
+  hideLoading();
+}
+
+function printRawbt(image){
+  showLoading("Printing...")
+
+  const socket = new WebSocket("ws://localhost:40213/");
+
+  socket.onerror = event => showError("Failed to connect to RawBT WS API");
+
+  socket.onopen = event => {
+    const job = {commands: [{
+      command: "image",
+      base64: image.split(",")[1],
+      attributesImage: {
+        graphicFilter: 2, // Atkinson filter
+      },
+    }]};
+
+    socket.send(JSON.stringify(job));
+  };
+
+  socket.onmessage = event => {
+    response = JSON.parse(event.data);
+
+    switch (response.responseType) {
+    case "progress":
+      showLoading(`Printing... ${100 * response.progress} %`);
+      break;
+    case "success":
+      hideLoading();
+      socket.close();
+      break;
+    case "error":
+      showError(`RawBT error: ${response.errorMessage}`);
+      socket.close();
+      break;
+    default:
+      showError(`Unknown RawBT response: ${event.data}`);
+      socket.close();
+    }
+  };
 }
 
 function makeQuery(params, separator) {
@@ -128,14 +171,12 @@ function printImage(image) {
     window.print();
     break;
   case "rawbt":
-    window.open(`rawbt:${image}`);
+    printRawbt(image);
     addToHistory(image);
     break;
   default:
     console.error(`Unknown print mode: ${mode}`);
   }
-
-  hideLoading();
 }
 
 function momir(manaValue) {
