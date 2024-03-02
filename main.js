@@ -76,6 +76,13 @@ function makeQuery(params, separator) {
     .join(separator);
 }
 
+function setButtonsDisabled(value = true) {
+  const buttons = document.querySelectorAll(".momir-button");
+  buttons.forEach(button => {
+    button.disabled = value;
+  });
+}
+
 function showAlert(element) {
   element.classList.remove("d-none");
   element.classList.add("show");
@@ -84,6 +91,30 @@ function showAlert(element) {
 function hideAlert(element) {
   element.classList.add("d-none");
   element.classList.remove("show");
+}
+
+function showLoading(message) {
+  document.getElementById("loadingMessage").textContent = message;
+  showAlert(document.getElementById("loadingAlert"));
+  setButtonsDisabled();
+}
+
+function showError(message) {
+  const errorAlert = document.getElementById("errorAlert");
+
+  console.error(message);
+  errorAlert.textContent = message;
+  showAlert(errorAlert);
+  hideLoading();
+}
+
+function hideLoading() {
+  hideAlert(document.getElementById("loadingAlert"));
+  setButtonsDisabled(false);
+}
+
+function hideError() {
+  hideAlert(document.getElementById("errorAlert"));
 }
 
 function printImage(image) {
@@ -103,6 +134,8 @@ function printImage(image) {
   default:
     console.error(`Unknown print mode: ${mode}`);
   }
+
+  hideLoading();
 }
 
 function momir(manaValue) {
@@ -125,30 +158,14 @@ function momir(manaValue) {
   addCurrentCardToHistory();
   document.getElementById("card-image").classList.add("d-none");
 
-  const loadingAlert = document.getElementById("loadingAlert");
-  const errorAlert = document.getElementById("errorAlert");
-
-  showAlert(loadingAlert);
-  hideAlert(errorAlert);
-
-  const buttons = document.querySelectorAll(".momir-button");
-  buttons.forEach(button => {
-    button.disabled = true;
-  });
+  hideError();
+  showLoading("Fetching image...");
 
   fetchImage(url)
     .then(image => printImage(image))
     .catch(error => {
-      console.error(error);
-      errorAlert.textContent = error.message;
-      showAlert(errorAlert);
-    })
-    .finally(() => {
-      hideAlert(loadingAlert);
-
-      buttons.forEach(button => {
-        button.disabled = false;
-      });
+      showError(error.message);
+      hideLoading();
     });
 }
 
